@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <title>Shopping List</title>
+</head>
+<body>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f8f8;
+    }
+    #app {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    input[type="text"]:focus {
+        outline: none;
+        border-color: #66afe9;
+    }
+    button {
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+    <div id="app">
+        <h1>Sari-sari Store</h1>
+        <br>
+        <table>
+            <tr>
+                <td style="font-weight: bold;">Item</td>
+                <td style="font-weight: bold;">Price</td>
+                <td style="font-weight: bold;">Quantity</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Coke</td>
+                <td>P20</td>
+                <td><input type="text" v-model="quantityCoke" placeholder="Enter Quantity"></td>
+                <td><button @click="addtoCartCoke">Add to Cart</button></td>
+            </tr>
+            <tr>
+                <td>Pancit Canton</td>
+                <td>P15</td>
+                <td><input type="text" v-model="quantityPancitCanton" placeholder="Enter Quantity"></td>
+                <td><button @click="addtoCartPancitCanton">Add to Cart</button></td>
+            </tr>
+            <tr>
+                <td>Fudgee Bar</td>
+                <td>P12</td>
+                <td><input type="text" v-model="quantityFudgeeBar" placeholder="Enter Quantity"></td>
+                <td><button @click="addtoCartFudgeeBar">Add to Cart</button></td>
+            </tr>
+            <tr>
+              <td>Cheesecake</td>
+              <td>P12</td>
+              <td><input type="text" v-model="quantityCheesecake" placeholder="Enter Quantity"></td>
+              <td><button @click="addtoCartCheesecake">Add to Cart</button></td>
+          </tr>
+          <tr>
+            <td>Zesto</td>
+            <td>P10</td>
+            <td><input type="text" v-model="quantityZesto" placeholder="Enter Quantity"></td>
+            <td><button @click="addtoCartZesto">Add to Cart</button></td>
+        </tr>
+        </table>
+
+        <input type="text" v-model="item" placeholder="Enter item">
+        <p>{{error}}</p>
+        <button @click="addCart">Add to Cart</button>
+        <br>
+        <br>
+        <table>
+            <tr v-for="(carts, index) in cart">
+                <td>{{carts.name}}</td>
+                <td>{{carts.number}}</td>
+                <td><button @click="editItem(index)">Edit</button></td>
+                <td><button @click="deleteItem(index)">Delete</button></td>
+            </tr>
+        </table>
+
+      
+        
+        <p>Total Price : P {{ totalSum }}</p>
+   
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data:{
+                error:'',
+                item:'',
+                quantity:'',
+                quantityCoke:'',
+                quantityPancitCanton:'',
+                quantityFudgeeBar:'',
+                quantityCheesecake:'',
+                quantityZesto:'',
+                cart:[],
+                sum: 0,
+                coke: 10,
+                pancitcanton: 15,
+                fudgeebar: 12,
+                cheesecake: 12,
+                zesto: 10
+
+            },
+
+            methods:{
+                addCart(){
+                    if(this.item.toLowerCase() == 'coke'){
+                        this.sum+= this.banana;
+                        this.cart.push({id: this.cart.length, name: this.item.toLowerCase()});
+                        this.item = '';
+                        this.error="";
+                    }
+                    else if(this.item.toLowerCase() == 'pancitcanton'){
+                        this.sum += this.orange
+                        this.cart.push({id: this.cart.length, name: this.item.toLowerCase()});
+                        this.item = '';
+                        this.error="";
+                    }
+                    else if(this.item.toLowerCase() == 'fudgeebar'){
+                        this.sum += this.apple
+                        this.cart.push({id: this.cart.length, name: this.item.toLowerCase()});
+                        this.item = '';
+                        this.error="";
+                    }
+                    else if(this.item.toLowerCase() == 'cheesecake'){
+                        this.sum += this.apple
+                        this.cart.push({id: this.cart.length, name: this.item.toLowerCase()});
+                        this.item = '';
+                        this.error="";
+                    }
+                    else if(this.item.toLowerCase() == 'zesto'){
+                        this.sum += this.apple
+                        this.cart.push({id: this.cart.length, name: this.item.toLowerCase()});
+                        this.item = '';
+                        this.error="";
+                    }
+                    else{
+                        this.error="item doens't exist";    
+                    } 
+                },
+
+                addtoCartCoke(){
+                    if(this.quantityCoke <= 0){
+                        this.error="item doens't exist";
+                    }
+                    else{
+                        this.sum+= this.coke * parseInt(this.quantityCoke);
+                        this.cart.push({id: this.cart.length, name: "coke", number: this.quantityCoke});
+                        this.quantityCoke = '';
+                        this.error="";
+                    }
+                },
+                addtoCartPancitCanton(){
+                    if(this.quantityPancitCanton <= 0){
+                        this.error="item doens't exist";
+                    }
+                    else{
+                        this.sum+= this.pancitcanton * parseInt(this.quantityPancitCanton);
+                        this.cart.push({id: this.cart.length, name: "pancitcanton", number: this.quantityPancitCanton});
+                        this.quantityPancitCanton = '';
+                        this.error="";
+                    }
+                },
+                addtoCartFudgeeBar(){
+                    if(this.quantityFudgeeBar <= 0){
+                        this.error="item doens't exist";
+                    }
+                    else{
+                        this.sum+= this.fudgeebar * parseInt(this.quantityFudgeeBar);
+                        this.cart.push({id: this.cart.length, name: "fudgeebar", number: this.quantityFudgeeBar});
+                        this.quantityFudgeeBar = '';
+                        this.error="";
+                    }
+                },
+                addtoCartCheesecake(){
+                    if(this.quantityCheesecake <= 0){
+                        this.error="item doens't exist";
+                    }
+                    else{
+                        this.sum+= this.fudgeebar * parseInt(this.quantityCheesecake);
+                        this.cart.push({id: this.cart.length, name: "cheesecake", number: this.quantityCheesecake});
+                        this.quantityCheesecake = '';
+                        this.error="";
+                    }
+                },
+                addtoCartZesto(){
+                    if(this.quantityZesto <= 0){
+                        this.error="item doens't exist";
+                    }
+                    else{
+                        this.sum+= this.zesto * parseInt(this.quantityZesto);
+                        this.cart.push({id: this.cart.length, name: "zesto", number: this.quantityZesto});
+                        this.quantityZesto = '';
+                        this.error="";
+                    }
+                },
+
+                editItem(index) {
+                  const newQuantity = prompt("Enter new quantity:");
+                  if (newQuantity !== null) {
+                      if (newQuantity <= 0 || isNaN(newQuantity)) {
+                          this.error = "Invalid quantity";
+                      } else {
+                          const item = this.cart[index];
+                          switch (item.name) {
+                              case 'coke':
+                                  this.sum -= this.coke * item.number;
+                                  this.sum += this.coke * newQuantity;
+                                  break;
+                              case 'pancitcanton':
+                                  this.sum -= this.pancitcanton * item.number;
+                                  this.sum += this.pancitcanton * newQuantity;
+                                  break;
+                              case 'fudgeebar':
+                                  this.sum -= this.fudgeebar * item.number;
+                                  this.sum += this.fudgeebar * newQuantity;
+                                  break;
+                              case 'cheesecake':
+                                  this.sum -= this.cheesecake * item.number;
+                                  this.sum += this.cheesecake * newQuantity;
+                                  break;
+                              case 'zesto':
+                                  this.sum -= this.zesto * item.number;
+                                  this.sum += this.zesto * newQuantity;
+                                  break;
+                          }
+                          this.cart[index].number = parseInt(newQuantity);
+                          this.error = "";
+                      }
+                  }
+              },
+              
+                deleteItem(index) {
+                    if (this.cart[index].name == 'coke') {
+                        this.sum -= this.coke;
+                        this.cart.splice(index, 1);
+                    }
+                    else if (this.cart[index].name == 'pancitcanton') {
+                        this.sum -= this.pancitcanton;
+                        this.cart.splice(index, 1);
+                    }
+                    else if (this.cart[index].name == 'fudgeebar') {
+                        this.sum -= this.fudgeebar;
+                        this.cart.splice(index, 1);
+                    }
+                    else if (this.cart[index].name == 'cheesecake') {
+                        this.sum -= this.cheesecake;
+                        this.cart.splice(index, 1);
+                    } 
+                    else if (this.cart[index].name == 'zesto') {
+                        this.sum -= this.zesto;
+                        this.cart.splice(index, 1);
+                    }
+                }
+            },
+            computed:{
+                totalitem(){
+                    return this.cart.length
+                },
+                completeditem(){
+                    return this.cart.filter(item => item.completed).length
+                },
+                totalSum(){
+                    return this.sum;
+                }
+            }
+        });
+
+    </script>
